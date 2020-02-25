@@ -8,14 +8,53 @@
 			#map {
 				height: 100%;
 			}
+
 			html, body {
 				height: 100%;
 				margin: 0;
 				padding: 0;
+				font-family: sans-serif;
 			}
+
+            nav {
+                z-index: 1;
+                position: absolute;
+                left: 20px;
+                top: 20px;
+                background: white;
+                color: black;
+                border-radius: 5px;
+                padding: 5px;
+                border: 3px solid #555;
+            }
+            nav a {
+                display: block;
+                margin: 5px;
+                color: #555;
+                text-decoration: none;
+                border-bottom: 1px solid #000;
+            }
+            nav p {
+                margin: 5px;
+            }
+            nav a:last-child {
+                border-bottom: none;
+            }
 		</style>
     </head>
     <body>
+        <nav>
+            <p>NAVIGATION</p>
+            <a id="recenter" href="#">RECENTER</a>
+            <a id="millvale" href="#">0 SOUTH MILLVALE AVE</a>
+            <a id="shady" href="#">0 SHADY AVE</a>
+            <a id="liberty" href="#">0 LIBERTY AVE</a>
+            <a id="ruthven" href="#">0 RUTHVEN ST</a>
+            <a id="bayard" href="#">0 BAYARD PL</a>
+            <a id="vernon" href="#">0 MOUNT VERNON ST</a>
+            <a id="aiken" href="#">0 SOUTH AIKEN AVE</a>
+            <a id="baum" href="#">0 BAUM BLVD</a>
+        </nav>
         <div id="map"></div>
         <script>
             let map;
@@ -364,6 +403,31 @@
                     bounds.setMap(map);
                 }
             }
+
+            const streets = [
+                {name: 'millvale', coord: {lat: 40.4557095936156, lng: -79.9475725819868}},
+                {name: 'shady', coord: {lat: 40.4389801432319,lng: -79.9190526854487}},
+                {name: 'liberty', coord: {lat: 40.4636933222932,lng: -79.954385477718}},
+                {name: 'ruthven', coord: {lat: 40.4605180100171, lng: -79.9593120139292}},
+                {name: 'bayard', coord: {lat: 40.452174970821, lng: -79.9428760580989}},
+                {name: 'vernon', coord: {lat: 40.463203761195, lng: -79.9009320617554}},
+                {name: 'aiken', coord: {lat: 40.4517193764157, lng: -79.9360294044834}},
+                {name: 'baum', coord: {lat: 40.4547634982772,lng: -79.9430059227542}},
+            ];
+
+            for (let i = 0; i < streets.length; i++) {
+                const el = document.getElementById(streets[i].name);
+                el.onclick = () => {
+                    map.setZoom(18);
+                    map.setCenter(streets[i].coord);
+                }
+            }
+
+            document.getElementById('recenter').onclick = () => {
+                map.setZoom(14);
+                map.setCenter({lat: 40.455709, lng: -79.94657});
+            }
+
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzKWcC_vCKgP9NzTLaEk5nOj7A34teZLw&callback=initMap"
     async defer></script>
